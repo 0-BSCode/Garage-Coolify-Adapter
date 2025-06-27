@@ -2,7 +2,7 @@ services:
   garage:
     build:
       context: .
-      dockerfile: Dockerfile.garage
+      dockerfile: ./server/Dockerfile
     container_name: garaged
     restart: unless-stopped
     volumes:
@@ -12,11 +12,16 @@ services:
       - 'RPC_SECRET=${RPC_SECRET}'
       - 'ADMIN_TOKEN=${ADMIN_TOKEN}'
       - 'METRICS_TOKEN=${METRICS_TOKEN}'
+    ports:
+      - 3901:3901
+      - 3900:3900
+      - 3902:3902
+      - 3903:3903
 
   webui:
     build:
       context: .
-      dockerfile: Dockerfile.garage-web
+      dockerfile: web/Dockerfile
     container_name: garage-webui
     restart: unless-stopped
     environment:
@@ -25,6 +30,8 @@ services:
       - 'RPC_SECRET=${RPC_SECRET}'
       - 'ADMIN_TOKEN=${ADMIN_TOKEN}'
       - 'METRICS_TOKEN=${METRICS_TOKEN}'    
+    ports:
+      - 3909:3909
 
 volumes:
   garage-meta:

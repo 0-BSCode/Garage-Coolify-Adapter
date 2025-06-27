@@ -3,7 +3,7 @@ FROM alpine AS runner
 RUN apk update && apk add envsubst
 COPY --from=build /bin/main /bin/garage
 WORKDIR /app
-COPY ./build-web.sh .
+COPY ./web/build.sh .
 COPY ./garage.tmpl.toml .
-RUN chmod +x ./build-web.sh
-CMD ["./build-web.sh"]
+RUN chmod +x ./build.sh
+CMD ["./build.sh"]
