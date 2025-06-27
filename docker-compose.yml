@@ -8,8 +8,6 @@ services:
     volumes:
       - garage-meta:/var/lib/garage/meta 
       - garage-data:/var/lib/garage/data 
-    ports:
-      - '${GARAGE_API_PORT}:3900'
     environment:
       - 'RPC_SECRET=${RPC_SECRET}'
       - 'ADMIN_TOKEN=${ADMIN_TOKEN}'
