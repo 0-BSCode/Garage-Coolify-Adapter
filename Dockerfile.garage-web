@@ -1,0 +1,24 @@
+# FROM alpine AS builder
+# # RUN apk update && apk add envsubst
+# # WORKDIR /app
+# # COPY ./garage.toml.tmpl .
+# # RUN envsubst < garage.tmpl.toml > garage.toml
+
+# FROM khairul169/garage-webui:latest AS garage-web
+# COPY --from=builder /bin/sh /bin/sh
+# WORKDIR /app
+# COPY ./build.sh .
+# COPY ./garage.tmpl.toml .
+# # RUN chmod +x ./build.sh
+# # ENTRYPOINT ["sleep", "300"]
+# ENTRYPOINT ["ls", "-la"]
+
+FROM khairul169/garage-webui:latest AS build
+FROM alpine AS runner
+RUN apk update && apk add envsubst
+COPY --from=build /bin/main /bin/garage
+WORKDIR /app
+COPY ./build-web.sh .
+COPY ./garage.tmpl.toml .
+RUN chmod +x ./build-web.sh
+CMD ["./build-web.sh"]

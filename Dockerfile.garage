@@ -1,0 +1,26 @@
+# FROM alpine AS builder
+# # RUN apk update && apk add envsubst
+# # WORKDIR /app
+# # COPY ./garage.toml.tmpl .
+# # RUN envsubst < garage.tmpl.toml > garage.toml
+
+# FROM dxflrs/garage:v2.0.0 AS garage
+# COPY --from=builder /bin/sh /bin/sh
+# WORKDIR /app
+# COPY ./build.sh .
+# COPY ./garage.tmpl.toml .
+# # RUN chmod +x ./build.sh
+# ENTRYPOINT ["./build.sh"]
+
+FROM dxflrs/garage:v2.0.0 AS build
+FROM alpine AS runner
+RUN apk update && apk add envsubst
+COPY --from=build / /
+# ENTRYPOINT ["ls", "-la"]
+WORKDIR /app
+COPY ./build.sh .
+COPY ./garage.tmpl.toml .
+RUN chmod +x ./build.sh
+ENV RUST_BACKTRACE=1
+ENV RUST_LOG=garage=info
+CMD ["./build.sh"]
