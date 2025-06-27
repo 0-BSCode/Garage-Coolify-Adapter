@@ -4,12 +4,7 @@ services:
       context: .
       dockerfile: Dockerfile.garage
     container_name: garaged
-    restart: unless-stopped          
-    ports:
-      - "3900:3900"                  
-      - "3901:3901"                  
-      - "3902:3902"                  
-      - "3903:3903"                  
+    restart: unless-stopped
     volumes:
       - garage-meta:/var/lib/garage/meta 
       - garage-data:/var/lib/garage/data 
@@ -24,8 +19,6 @@ services:
       dockerfile: Dockerfile.garage-web
     container_name: garage-webui
     restart: unless-stopped
-    ports:
-      - 3909:3909
     environment:
       - 'API_BASE_URL=http://garage:3903'
       - 'S3_ENDPOINT_URL=http://garage:3900'
