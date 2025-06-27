@@ -11,10 +11,10 @@ However, this setup is not easily deployable to self-hosting solutions like [Coo
 
 However, we can't just commit the configuration files to a repository since they contain secret configuration options like `rpc_secret`. As a workaround, we can embed environment variables in the TOML file and use `envsubst` to replace the variables with their actual values during runtime. All of this is managed in the `docker-compose.yml` file, making it possible to deploy Garage to Coolify easily.
 
-> [!NOTE] Customizing the Configuration
+> [!NOTE]
 > If you want to customize your configuration, you must edit the `garage.tmpl.toml` file provided. See [here](https://garagehq.deuxfleurs.fr/documentation/reference-manual/configuration) for the configuration options.
 
-> [!NOTE] Generating secrets
+> [!NOTE]
 > To generate the secrets, use `openssl rand -base64 32`
 
 ## Coolify Deploy
