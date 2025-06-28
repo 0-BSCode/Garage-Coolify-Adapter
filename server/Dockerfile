@@ -1,7 +1,7 @@
-FROM dxflrs/garage:v2.0.0 AS build
 FROM alpine AS runner
 RUN apk update && apk add envsubst
-COPY --from=build / /
+COPY --from=ghcr.io/tarampampam/curl:8.6.0 /bin/curl /bin/curl
+COPY --from=dxflrs/garage:v2.0.0 / /
 WORKDIR /app
 COPY ./server/build.sh .
 COPY ./garage.tmpl.toml .

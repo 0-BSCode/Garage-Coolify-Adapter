@@ -11,7 +11,7 @@ services:
     environment:
       - 'RPC_SECRET=${RPC_SECRET}'
       - 'ADMIN_TOKEN=${ADMIN_TOKEN}'
-      - 'METRICS_TOKEN=${METRICS_TOKEN}'
+      - 'METRICS_TOKEN=${METRICS_TOKEN}'      
 
   webui:
     build:
@@ -24,7 +24,15 @@ services:
       - 'S3_ENDPOINT_URL=http://garage:3900'
       - 'RPC_SECRET=${RPC_SECRET}'
       - 'ADMIN_TOKEN=${ADMIN_TOKEN}'
-      - 'METRICS_TOKEN=${METRICS_TOKEN}'    
+      - 'METRICS_TOKEN=${METRICS_TOKEN}'
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:3909"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    depends_on:
+      - garage
 
 volumes:
   garage-meta:
